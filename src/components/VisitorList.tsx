@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import type { Visitor } from '../types/visitor';
 import { VisitorItem } from './VisitorItem';
-import './VisitorList.module.css';
+import styles from './VisitorList.module.css';
 
 interface VisitorListProps {
   visitors: Visitor[];
@@ -11,19 +11,34 @@ interface VisitorListProps {
 
 export const VisitorList: FC<VisitorListProps> = ({ visitors, onEdit, onDelete }) => {
   return (
-    <div className="visitor-list">
-      {visitors.length === 0 ? (
-        <p>Нет посетителей</p>
-      ) : (
-        visitors.map((visitor) => (
-          <VisitorItem
-            key={visitor.id}
-            visitor={visitor}
-            onEdit={onEdit}
-            onDelete={onDelete}
-          />
-        ))
-      )}
-    </div>
+    <table className={styles.visitorTable}>
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>ФИО</th>
+          <th>Компания</th>
+          <th>Группа</th>
+          <th>Присутствие</th>
+          <th>Действия</th>
+        </tr>
+      </thead>
+      <tbody>
+        {visitors.length === 0 ? (
+          <tr>
+            <td colSpan={6}>Нет посетителей</td>
+          </tr>
+        ) : (
+          visitors.map((visitor, index) => (
+            <VisitorItem
+              key={visitor.id}
+              visitor={visitor}
+              index={index + 1}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
+          ))
+        )}
+      </tbody>
+    </table>
   );
 };

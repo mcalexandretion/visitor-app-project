@@ -1,26 +1,35 @@
 import type { FC } from 'react';
 import type { Visitor } from '../types/visitor';
-import './VisitorItem.module.css';
+import styles from './VisitorItem.module.css';
 
 interface VisitorItemProps {
   visitor: Visitor;
+  index: number; // Индекс для номера
   onEdit: (visitor: Visitor) => void;
   onDelete: (id: string) => void;
 }
 
-export const VisitorItem: FC<VisitorItemProps> = ({ visitor, onEdit, onDelete }) => {
+export const VisitorItem: FC<VisitorItemProps> = ({ visitor, index, onEdit, onDelete }) => {
+  const handleRowClick = () => {
+    onEdit(visitor); // Передаем посетителя для редактирования
+  };
+
   return (
-    <div className="visitor-item">
-      <div>
-        <h3>{visitor.fullName}</h3>
-        <p>Компания: {visitor.company}</p>
-        <p>Группа: {visitor.group}</p>
-        <p>Присутствует: {visitor.present ? 'Да' : 'Нет'}</p>
-      </div>
-      <div className="visitor-actions">
-        <button onClick={() => onEdit(visitor)}>Редактировать</button>
-        <button onClick={() => onDelete(visitor.id)}>Удалить</button>
-      </div>
-    </div>
+    <tr className={styles.visitorRow} onClick={handleRowClick}>
+      <td>{index}</td>
+      <td>{visitor.fullName}</td>
+      <td>{visitor.company}</td>
+      <td>{visitor.group}</td>
+      <td>
+        {visitor.present ? (
+          <span className={styles.presentCircle}></span>
+        ) : (
+          <span className={styles.absentCircle}></span>
+        )}
+      </td>
+      <td>
+        <button onClick={(e) => { e.stopPropagation(); onDelete(visitor.id); }}>Удалить</button>
+      </td>
+    </tr>
   );
 };
