@@ -95,8 +95,8 @@ function App() {
         <button onClick={() => setIsModalOpen(true)}>Добавить</button>
       </div>
     
-      
-      <VisitorList
+      <div className='main-container'>
+<VisitorList
         visitors={visitors}
         onEdit={(visitor) => {
           setEditingVisitor(visitor);
@@ -111,6 +111,8 @@ function App() {
           onClose={() => { setIsModalOpen(false); setEditingVisitor(null); }}
         />
       </Modal>
+      </div>
+      
       <div className="footer">
 <PresenceFilter onFilter={handlePresenceFilter} initialPresent={filters.present} />
       </div>
