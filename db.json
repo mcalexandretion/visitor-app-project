@@ -13,6 +13,20 @@
       "company": "ООО Василёк",
       "group": "Клиент",
       "present": false
+    },
+    {
+      "fullName": "Иванов Пётр Иванович",
+      "company": "ООО Роза",
+      "group": "Клиент",
+      "present": true,
+      "id": "54235976-e6d5-4ee1-a517-60d0db5f95c2"
+    },
+    {
+      "fullName": "Васильков Андрей Валерьевич",
+      "company": "ООО Пион",
+      "group": "Партнер",
+      "present": false,
+      "id": "424db4cd-99a3-44c1-b4a0-a0abd307650c"
     }
   ]
 }

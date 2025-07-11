@@ -1,4 +1,16 @@
-.visitor-list {
-  max-width: 800px;
-  margin: 0 auto;
+.visitorTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: #fff;
+}
+
+
+.visitorTable th {
+  font-weight: bold;
+  border-bottom: 4px solid #E9E9E9; 
+}
+
+.visitorTable td {
+  vertical-align: middle;
 }

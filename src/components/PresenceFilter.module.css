@@ -1,27 +1,33 @@
-.presence-filter {
+.presenceFilter {
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 16px;
   margin-bottom: 20px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
+  font-family: sans-serif;
 }
 
-.presence-filter label {
+.filterLabel {
   font-weight: bold;
+  color: #4b2f0c;
 }
 
-.presence-filter select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
+.filterButton {
+  background: none;
+  border: none;
+  color: #4b2f0c;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 16px;
+  transition: background-color 0.2s;
 }
 
-@media (max-width: 600px) {
-  .presence-filter {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+.filterButton:hover {
+  background-color: #f0f0f0;
+}
+
+.filterButton.active {
+  background-color: #d3d3d3;
+  color: #888;
+  cursor: default;
 }

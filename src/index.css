@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
-  background: #f5f5f5;
+
 }
 
 .app {
@@ -29,4 +29,9 @@ body {
 .logo {
   width: auto;
   max-height: 50px;
+}
+hr {
+  border: none;
+  height: 1px;
+  background-color: #ccc;
 }
