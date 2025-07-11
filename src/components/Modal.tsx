@@ -1,6 +1,6 @@
 import type { FC, ReactNode } from 'react';
-import {useEffect} from 'react';
-import './Modal.module.css';
+import { useEffect } from 'react';
+import styles from './Modal.module.css';
 
 interface ModalProps {
   isOpen: boolean;
@@ -13,15 +13,16 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
+    console.log('Modal mounted, isOpen:', isOpen); // Отладка
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
+  }, [onClose, isOpen]); // Добавим isOpen для повторной проверки
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className={styles.modalOverlay} onClick={onClose}>
+      <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>

@@ -12,14 +12,14 @@ import logo from './assets/logo.png';
 function App() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingVisitor, setEditingVisitor] = useState<Visitor | null>(null);
+  const [selectedVisitor, setSelectedVisitor] = useState<Visitor | null>(null); // Для выбора посетителя
   const [filters, setFilters] = useState<{ fullName?: string; present?: boolean }>({
     fullName: undefined,
     present: undefined,
   });
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true); // Индикатор загрузки
 
-  
+  // Обновление фильтров и загрузка данных при изменении URL или монтировании
   useEffect(() => {
     const loadDataFromUrl = async () => {
       setIsLoading(true);
@@ -50,10 +50,16 @@ function App() {
     }
   };
 
+  // Подсчет присутствующих и отсутствующих
   const getVisitorCounts = () => {
     const presentCount = visitors.filter((v) => v.present).length;
     const absentCount = visitors.filter((v) => !v.present).length;
     return { presentCount, absentCount };
+  };
+
+  const handleOpenModal = (visitor: Visitor) => {
+    setSelectedVisitor(visitor);
+    setIsModalOpen(true);
   };
 
   const handleSearch = (fullName: string) => {
@@ -93,25 +99,30 @@ function App() {
   };
 
   const handleEdit = async (data: Omit<Visitor, 'id'>) => {
-    if (!editingVisitor) return;
+    if (!selectedVisitor) return;
     try {
-      const updatedVisitor = await updateVisitor(editingVisitor.id, data);
+      const updatedVisitor = await updateVisitor(selectedVisitor.id, data);
       setVisitors(visitors.map((v) => (v.id === updatedVisitor.id ? updatedVisitor : v)));
       setIsModalOpen(false);
-      setEditingVisitor(null);
+      setSelectedVisitor(null);
       loadVisitors(filters);
     } catch (error) {
       console.error('Error editing visitor:', error);
     }
   };
 
-  const handleDelete = async (id: string) => {
-    try {
-      await deleteVisitor(id);
-      setVisitors(visitors.filter((v) => v.id !== id));
-      loadVisitors(filters);
-    } catch (error) {
-      console.error('Error deleting visitor:', error);
+  const handleDelete = async () => {
+    if (!selectedVisitor) return;
+    if (window.confirm('Вы уверены, что хотите удалить этого посетителя?')) {
+      try {
+        await deleteVisitor(selectedVisitor.id);
+        setVisitors(visitors.filter((v) => v.id !== selectedVisitor.id));
+        setIsModalOpen(false);
+        setSelectedVisitor(null);
+        loadVisitors(filters);
+      } catch (error) {
+        console.error('Error deleting visitor:', error);
+      }
     }
   };
 
@@ -137,27 +148,40 @@ function App() {
           <>
             <VisitorList
               visitors={visitors}
-              onEdit={(visitor) => {
-                setEditingVisitor(visitor);
-                setIsModalOpen(true);
-              }}
-              onDelete={handleDelete}
+              onOpenModal={handleOpenModal}
             />
             <Modal
               isOpen={isModalOpen}
               onClose={() => {
                 setIsModalOpen(false);
-                setEditingVisitor(null);
+                setSelectedVisitor(null);
               }}
             >
-              <VisitorForm
-                visitor={editingVisitor || undefined}
-                onSubmit={editingVisitor ? handleEdit : handleAdd}
-                onClose={() => {
-                  setIsModalOpen(false);
-                  setEditingVisitor(null);
-                }}
-              />
+              {selectedVisitor ? (
+                <div className="modal-content-wrapper">
+                  <h2>Редактировать посетителя</h2>
+                  <VisitorForm
+                    visitor={selectedVisitor}
+                    onSubmit={handleEdit}
+                    onClose={() => {
+                      setIsModalOpen(false);
+                      setSelectedVisitor(null);
+                    }}
+                  />
+                  <button className="delete-button" onClick={handleDelete}>
+                    Удалить
+                  </button>
+                </div>
+              ) : (
+                <VisitorForm
+                  visitor={undefined}
+                  onSubmit={handleAdd}
+                  onClose={() => {
+                    setIsModalOpen(false);
+                    setSelectedVisitor(null);
+                  }}
+                />
+              )}
             </Modal>
           </>
         )}
