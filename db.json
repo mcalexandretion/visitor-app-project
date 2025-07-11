@@ -1,0 +1,18 @@
+{
+  "visitors": [
+    {
+      "id": "1",
+      "fullName": "Иванов Иван Иванович",
+      "company": "ООО Ромашка",
+      "group": "Прохожий",
+      "present": true
+    },
+    {
+      "id": "2",
+      "fullName": "Петров Пётр Петрович",
+      "company": "ООО Василёк",
+      "group": "Клиент",
+      "present": false
+    }
+  ]
+}
