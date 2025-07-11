@@ -1,6 +1,6 @@
 import type { FC } from 'react';
-import {useState, useEffect} from 'react';
-import './PresenceFilter.module.css';
+import { useState, useEffect } from 'react';
+import styles from './PresenceFilter.module.css';
 
 interface PresenceFilterProps {
   onFilter: (present: boolean | undefined) => void;
@@ -14,20 +14,32 @@ export const PresenceFilter: FC<PresenceFilterProps> = ({ onFilter, initialPrese
     setPresent(initialPresent);
   }, [initialPresent]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value === '' ? undefined : e.target.value === 'true';
+  const handleClick = (value: boolean | undefined) => {
     setPresent(value);
     onFilter(value);
   };
 
   return (
-    <div className="presence-filter">
-      <label>Присутствие</label>
-      <select value={present === undefined ? '' : present.toString()} onChange={handleChange}>
-        <option value="">Все</option>
-        <option value="true">Присутствуют</option>
-        <option value="false">Отсутствуют</option>
-      </select>
+    <div className={styles.presenceFilter}>
+      <label className={styles.filterLabel}>Фильтровать по:</label>
+      <button
+        className={`${styles.filterButton} ${present === false ? styles.active : ''}`}
+        onClick={() => handleClick(false)}
+      >
+        Отсутствующим
+      </button>
+      <button
+        className={`${styles.filterButton} ${present === true ? styles.active : ''}`}
+        onClick={() => handleClick(true)}
+      >
+        Присутствующим
+      </button>
+      <button
+        className={`${styles.filterButton} ${present === undefined ? styles.active : ''}`}
+        onClick={() => handleClick(undefined)}
+      >
+        Все
+      </button>
     </div>
   );
 };
