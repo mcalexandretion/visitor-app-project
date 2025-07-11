@@ -4,14 +4,13 @@ import styles from './VisitorItem.module.css';
 
 interface VisitorItemProps {
   visitor: Visitor;
-  index: number; // Индекс для номера
-  onEdit: (visitor: Visitor) => void;
-  onDelete: (id: string) => void;
+  index: number;
+  onOpenModal: (visitor: Visitor) => void;
 }
 
-export const VisitorItem: FC<VisitorItemProps> = ({ visitor, index, onEdit, onDelete }) => {
+export const VisitorItem: FC<VisitorItemProps> = ({ visitor, index, onOpenModal }) => {
   const handleRowClick = () => {
-    onEdit(visitor); // Передаем посетителя для редактирования
+    onOpenModal(visitor); 
   };
 
   return (
@@ -26,9 +25,6 @@ export const VisitorItem: FC<VisitorItemProps> = ({ visitor, index, onEdit, onDe
         ) : (
           <span className={styles.absentCircle}></span>
         )}
-      </td>
-      <td>
-        <button onClick={(e) => { e.stopPropagation(); onDelete(visitor.id); }}>Удалить</button>
       </td>
     </tr>
   );

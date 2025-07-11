@@ -5,11 +5,10 @@ import styles from './VisitorList.module.css';
 
 interface VisitorListProps {
   visitors: Visitor[];
-  onEdit: (visitor: Visitor) => void;
-  onDelete: (id: string) => void;
+  onOpenModal: (visitor: Visitor) => void;
 }
 
-export const VisitorList: FC<VisitorListProps> = ({ visitors, onEdit, onDelete }) => {
+export const VisitorList: FC<VisitorListProps> = ({ visitors, onOpenModal }) => {
   return (
     <table className={styles.visitorTable}>
       <thead>
@@ -19,13 +18,12 @@ export const VisitorList: FC<VisitorListProps> = ({ visitors, onEdit, onDelete }
           <th>Компания</th>
           <th>Группа</th>
           <th>Присутствие</th>
-          <th>Действия</th>
         </tr>
       </thead>
       <tbody>
         {visitors.length === 0 ? (
           <tr>
-            <td colSpan={6}>Нет посетителей</td>
+            <td colSpan={5}>Нет посетителей</td>
           </tr>
         ) : (
           visitors.map((visitor, index) => (
@@ -33,8 +31,7 @@ export const VisitorList: FC<VisitorListProps> = ({ visitors, onEdit, onDelete }
               key={visitor.id}
               visitor={visitor}
               index={index + 1}
-              onEdit={onEdit}
-              onDelete={onDelete}
+              onOpenModal={onOpenModal}
             />
           ))
         )}
