@@ -7,10 +7,15 @@
 
 
 .visitorTable th {
+
   font-weight: bold;
-  border-bottom: 4px solid #E9E9E9; 
+  border-bottom: 4px solid #E9E9E9;
 }
 
 .visitorTable td {
   vertical-align: middle;
+}
+
+.visitorTable td:nth-child(5) {
+  text-align: center;
 }
