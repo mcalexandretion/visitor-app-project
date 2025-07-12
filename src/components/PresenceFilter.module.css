@@ -20,6 +20,8 @@
   padding: 6px 12px;
   border-radius: 16px;
   transition: background-color 0.2s;
+    width: auto;
+  height: auto;
 }
 
 .filterButton:hover {

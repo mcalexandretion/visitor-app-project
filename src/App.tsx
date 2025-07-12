@@ -144,11 +144,16 @@ function App() {
         <img src={logo} alt="logo" className="logo" />
         <div className="search-add-container">
           <SearchForm onSearch={handleSearch} initialSearch={filters.fullName || ''} />
-          <button className="add-button" onClick={() => setIsModalOpen(true)}>
+
+        </div>          
+        <button className="add-button" onClick={() => setIsModalOpen(true)}>
             Добавить
           </button>
-        </div>
-        <div className="visitor-count">Посетителей: {presentCount}/{absentCount}</div>
+        <div className="visitor-count">
+         <label className="title">Посетители</label>
+         <div className="count"><span className="present">{presentCount}</span> / <span className="absent">{absentCount}</span></div>
+
+         </div>
       </header>
 
       <main className="main-container">

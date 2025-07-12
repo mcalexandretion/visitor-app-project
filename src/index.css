@@ -16,6 +16,7 @@ body {
 }
 .header {
   display: flex;
+  flex-direction: row;
   gap: 32px;
 }
 .footer {
@@ -35,4 +36,47 @@ hr {
   height: 1px;
   background-color: #ccc;
 }
- 
+
+.title {
+  color: #4E3000;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
+}
+button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  border: none;
+}
+.add-button {
+  background-color: #4caf50;
+  color: white;
+  transition: transform 0.2s ease;
+}
+.add-button:hover{
+  background-color: #3b8b3f;
+}
+
+.visitor-count {
+  margin-left: auto;
+  font-weight: bold;
+  color: #4E3000;
+}
+.visitor-count .present {
+  color: #4caf50;
+}
+
+.visitor-count .absent {
+  color: #EC5937;
+}
+.visitor-count .count{
+  text-align: end;
+}

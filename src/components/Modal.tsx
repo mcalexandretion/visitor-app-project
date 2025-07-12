@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 import { useEffect } from 'react';
 import styles from './Modal.module.css';
-
+import closeCircle from '../assets/close-circle.png'
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -23,6 +23,15 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+        <button
+  className={styles.closeButton}
+  onClick={onClose}
+  aria-label="Закрыть"
+  type="button"
+>
+  <img src={closeCircle} alt="Закрыть" className={styles.closeIcon} />
+</button>
+
         {children}
       </div>
     </div>

@@ -11,11 +11,10 @@
   gap: 5px;
 }
 
-/* Стили для кружков */
 .presentCircle {
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-color: #80BB00;
   border-radius: 50%;
   vertical-align: middle;
@@ -23,8 +22,8 @@
 
 .absentCircle {
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-color: #EC5937;
   border-radius: 50%;
   vertical-align: middle;

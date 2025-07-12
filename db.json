@@ -8,25 +8,25 @@
       "present": true
     },
     {
-      "id": "2",
       "fullName": "Петров Пётр Петрович",
       "company": "ООО Василёк",
       "group": "Клиент",
-      "present": false
-    },
-    {
-      "fullName": "Иванов Пётр Иванович",
-      "company": "ООО Роза",
-      "group": "Клиент",
       "present": true,
-      "id": "54235976-e6d5-4ee1-a517-60d0db5f95c2"
+      "id": "2"
     },
     {
-      "fullName": "Васильков Андрей Валерьевич",
-      "company": "ООО Пион",
+      "fullName": "Василькова Роза Андреевна",
+      "company": "ООО Ромашка",
       "group": "Партнер",
+      "present": true,
+      "id": "1ef7729f-67b5-4dd3-ae8f-4e60cb629625"
+    },
+    {
+      "fullName": "Петров Пётр Петрович",
+      "company": "ООО Ромашка",
+      "group": "Клиент",
       "present": false,
-      "id": "424db4cd-99a3-44c1-b4a0-a0abd307650c"
+      "id": "47d08171-ea07-48c0-8c71-76479210196f"
     }
   ]
 }
