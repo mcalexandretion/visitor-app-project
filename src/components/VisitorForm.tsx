@@ -1,15 +1,16 @@
-import type { FC, FormEvent} from 'react';
+import type { FC, FormEvent } from 'react';
 import { useState } from 'react';
 import type { Visitor } from '../types/visitor';
-import './VisitorForm.module.css';
+import styles from './VisitorForm.module.css';
 
 interface VisitorFormProps {
   visitor?: Visitor;
   onSubmit: (data: Omit<Visitor, 'id'>) => void;
+  onDelete?: () => void; // Опционально для режима редактирования
   onClose: () => void;
 }
 
-export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }) => {
+export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onDelete, onClose }) => {
   const [formData, setFormData] = useState<Omit<Visitor, 'id'>>({
     fullName: visitor?.fullName || '',
     company: visitor?.company || '',
@@ -23,8 +24,8 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="visitor-form">
-      <div className="form-group">
+    <form onSubmit={handleSubmit} className={styles.visitorForm}>
+      <div className={styles.formGroup}>
         <label>ФИО</label>
         <input
           type="text"
@@ -33,7 +34,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
           required
         />
       </div>
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label>Компания</label>
         <input
           type="text"
@@ -42,7 +43,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
           required
         />
       </div>
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label>Группа</label>
         <select
           value={formData.group}
@@ -51,9 +52,10 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
           <option value="Прохожий">Прохожий</option>
           <option value="Клиент">Клиент</option>
           <option value="Партнер">Партнер</option>
+          <option value="Гости">Гости</option>
         </select>
       </div>
-      <div className="form-group">
+      <div className={styles.formGroup}>
         <label>
           <input
             type="checkbox"
@@ -63,9 +65,19 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
           Присутствует
         </label>
       </div>
-      <div className="form-actions">
-        <button type="submit">Добавить</button>
-        <button type="button" onClick={onClose}>Отмена</button>
+      <div className={styles.formActions}>
+        {visitor ? (
+          <>
+            <button type="submit">Сохранить</button>
+            <button type="button" onClick={onDelete}>Удалить</button>
+            <button type="button" onClick={onClose}>Закрыть</button>
+          </>
+        ) : (
+          <>
+            <button type="submit">Добавить</button>
+            <button type="button" onClick={onClose}>Закрыть</button>
+          </>
+        )}
       </div>
     </form>
   );
