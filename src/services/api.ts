@@ -10,7 +10,7 @@ export const fetchVisitors = async (filters: {
   if (filters.fullName) params.append('fullName_like', filters.fullName);
   if (filters.present !== undefined) params.append('present', filters.present.toString());
   const response = await fetch(`${API_URL}?${params.toString()}`);
-  if (!response.ok) throw new Error('Failed to fetch visitors');
+  if (!response.ok) throw new Error('Ошибка вызова');
   return response.json();
 };
 
@@ -20,7 +20,7 @@ export const createVisitor = async (visitor: Omit<Visitor, 'id'>): Promise<Visit
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ ...visitor, id: crypto.randomUUID() }),
   });
-  if (!response.ok) throw new Error('Failed to create visitor');
+  if (!response.ok) throw new Error('Ошибка создания');
   return response.json();
 };
 
@@ -30,7 +30,7 @@ export const updateVisitor = async (id: string, visitor: Partial<Visitor>): Prom
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(visitor),
   });
-  if (!response.ok) throw new Error('Failed to update visitor');
+  if (!response.ok) throw new Error('Ошибка обновления');
   return response.json();
 };
 
@@ -38,5 +38,5 @@ export const deleteVisitor = async (id: string): Promise<void> => {
   const response = await fetch(`${API_URL}/${id}`, {
     method: 'DELETE',
   });
-  if (!response.ok) throw new Error('Failed to delete visitor');
+  if (!response.ok) throw new Error('Ошибка удаления');
 };
