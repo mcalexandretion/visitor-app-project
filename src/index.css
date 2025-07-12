@@ -6,7 +6,7 @@ body {
 }
 
 .app {
-  padding: 24px 50px;
+  padding: 24px 80px;
   position: relative;
   box-sizing: border-box;
 }
@@ -69,6 +69,7 @@ button {
   margin-left: auto;
   font-weight: bold;
   color: #4E3000;
+  font-size: 20px;
 }
 .visitor-count .present {
   color: #4caf50;
