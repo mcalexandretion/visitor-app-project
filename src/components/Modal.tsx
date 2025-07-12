@@ -13,10 +13,10 @@ export const Modal: FC<ModalProps> = ({ isOpen, onClose, children }) => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    console.log('Modal mounted, isOpen:', isOpen); // Отладка
+    console.log('Modal mounted, isOpen:', isOpen); 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [onClose, isOpen]); // Добавим isOpen для повторной проверки
+  }, [onClose, isOpen]); 
 
   if (!isOpen) return null;
 
