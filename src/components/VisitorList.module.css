@@ -24,3 +24,14 @@
   height: 60px;
 }
 
+.visitorTable th:first-child,
+.visitorTable td:first-child {
+  width: 90px;
+  max-width: 90px;
+}
+.visitorTable th:last-child,
+.visitorTable td:last-child {
+  width: 60px; 
+  min-width: 60px;
+  text-align: center;
+}
