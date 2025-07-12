@@ -19,12 +19,12 @@
   padding: 30px 40px;
   width: 60vw;
   height: auto;
-  max-height: none;
+  max-height: 80vh;
   max-width: 90%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   position: relative;
   animation: slideIn 0.3s ease-in;
-   overflow: visible; 
+  overflow: visible; 
 }
 
 .modal-content-wrapper {
