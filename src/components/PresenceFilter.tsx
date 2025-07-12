@@ -38,7 +38,7 @@ export const PresenceFilter: FC<PresenceFilterProps> = ({ onFilter, initialPrese
         className={`${styles.filterButton} ${present === undefined ? styles.active : ''}`}
         onClick={() => handleClick(undefined)}
       >
-        Все
+        Без фильтра
       </button>
     </div>
   );
