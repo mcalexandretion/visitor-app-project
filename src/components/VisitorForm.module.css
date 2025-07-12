@@ -2,50 +2,99 @@
   display: flex;
   flex-direction: column;
   gap: 15px;
+  padding: 20px 0 0 0;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .formGroup {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  flex-direction: row;
+  gap: 15px;
+  width: 100%;
+  align-items: center;
 }
 
-.formGroup label {
+.formLabel {
+  width: 50%;
+  display: flex;
+  align-items: center;
   font-weight: bold;
+  color: #4E3000;
 }
 
-.formGroup input,
-.formGroup select {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.formInput {
+  width: 50%;
+  display: flex;
+  align-items: center;
 }
+
+.formInput input,
+.formInput select {
+  padding: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
+  width: 100%;
+}
+
+.formInput input[type="checkbox"] {
+  width: auto;
+  margin-left: 0;
+}
+
+
 
 .formActions {
   display: flex;
   gap: 10px;
-  justify-content: flex-end;
-  margin-top: 15px;
+  padding: 20px 0 0 0;
+  justify-content: center;
 }
 
 .formActions button {
   padding: 8px 16px;
-  border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 40px;
+  border: none;
 }
 
 .formActions button[type="submit"] {
-  background-color: #28a745;
+  background-color: #4caf50;
+  color: white;
+  transition: transform 0.2s ease;
+}
+
+.formActions button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.deleteButton {
+  background-color: #EC5937;
   color: white;
 }
 
-.formActions button[type="button"] {
-  background-color: #dc3545;
+.closeButton {
+  background-color: #737373;
   color: white;
+  transition: transform 0.2s ease;
 }
 
-.formActions button:hover {
-  opacity: 0.9;
+.closeButton:hover {
+  background-color: #5e5e5e;
+}
+
+.title {
+  color: #4E3000;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 10px;
 }
