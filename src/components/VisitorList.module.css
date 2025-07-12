@@ -7,9 +7,9 @@
 
 
 .visitorTable th {
-
-  font-weight: bold;
   border-bottom: 4px solid #E9E9E9;
+  font-size: 15px;
+  text-align: start;
 }
 
 .visitorTable td {
@@ -23,3 +23,4 @@
 .visitorTable th {
   height: 60px;
 }
+

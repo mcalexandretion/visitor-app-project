@@ -12,7 +12,7 @@ export const VisitorList: FC<VisitorListProps> = ({ visitors, onOpenModal }) => 
   return (
     <table className={styles.visitorTable}>
       <thead>
-        <tr>
+        <tr className="visitor-table title">
           <th>№</th>
           <th>ФИО</th>
           <th>Компания</th>
