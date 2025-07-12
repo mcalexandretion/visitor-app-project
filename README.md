@@ -95,4 +95,37 @@ npm run dev
 
 ## Скриншоты
 
+<h3 align="center">Главная страница</h3>
+<p align="center">
+  <img src="<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/d7b6b592-567f-42c9-96fc-64e597a14397" alt="Главная страница" width="700"/>
+</p>
+
+<h3 align="center">Поиск по ФИО</h3>
+<p align="center">
+  <img src="<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/62d900a8-e387-4eda-8f89-aa32f1db1fb9" alt="Поиск по ФИО" width="700"/>
+</p>
+
+<h3 align="center">Фильтрация по присутствию</h3>
+<p align="center">
+  <img src="<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/7216be8d-04d6-45bd-baac-61cdeeac9dcf" 
+ alt="Фильтрация по присутствию" width="700"/>
+</p>
+
+<h3 align="center">Фильтрация по отсутствию</h3>
+<p align="center">
+  <img src="<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/170a09c6-39fe-4f7c-b63c-87bc8a1ce944" alt="Фильтрация по отсутствию" width="700"/>
+</p>
+
+<h3 align="center">Добавление нового посетителя</h3>
+<p align="center">
+  <img src="<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/6fb2694a-9991-4da4-86ae-f63f941eb13e"
+ alt="Добавление нового посетителя" width="700"/>
+</p>
+
+<h3 align="center">Редактирование информации о существующем посетителе</h3>
+<p align="center">
+  <img src="<img width="1920" height="1032" alt="image" src="https://github.com/user-attachments/assets/556d28f5-bb11-480f-9a85-6dea6ff47267"
+ alt="Редактирование посетителя" width="700"/>
+</p>
+
 
