@@ -27,7 +27,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onDelete,
     <form onSubmit={handleSubmit} className={styles.visitorForm}>
   <div className={styles.formGroup}>
     <div className={styles.formLabel}>
-      <label className={styles.title}>ФИО</label>
+      <label className="form-group title">ФИО</label>
     </div>
     <div className={styles.formInput}>
       <input
@@ -41,7 +41,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onDelete,
 
   <div className={styles.formGroup}>
     <div className={styles.formLabel}>
-      <label className={styles.title}>Компания</label>
+      <label className="form-group title">Компания</label>
     </div>
     <div className={styles.formInput}>
       <input
@@ -55,7 +55,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onDelete,
 
   <div className={styles.formGroup}>
     <div className={styles.formLabel}>
-      <label className={styles.title}>Группа</label>
+      <label className="form-group title">Группа</label>
     </div>
     <div className={styles.formInput}>
       <select
@@ -71,7 +71,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onDelete,
 
   <div className={styles.formGroup}>
     <div className={styles.formLabel}>
-      <label className={styles.title}>Присутствует</label>
+      <label className="form-group title">Присутствует</label>
     </div>
     <div className={styles.formInput}>
       <input
