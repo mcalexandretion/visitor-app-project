@@ -52,11 +52,11 @@ npm run dev
 ## Структура проекта
 
 ├── db.json                    # Файл данных для json-server с начальным списком посетителей  
-├── index.html                  
-├── src/
-│   ├── assets/
-│   │   ├── close-circle.png   # Иконка закрытия модального окна
-│   │   └── logo.png           # Логотип приложения
+├── index.html  
+├── src/  
+│   ├── assets/  
+│   │   ├── close-circle.png   # Иконка закрытия модального окна  
+│   │   └── logo.png           # Логотип приложения  
 │   ├── components/  
 │   │   ├── Modal.tsx          # Компонент модального окна  
 │   │   ├── PresenceFilter.tsx # Компонент фильтра по присутствию  
