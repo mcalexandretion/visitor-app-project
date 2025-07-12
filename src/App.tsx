@@ -1,137 +1,83 @@
-import { useState, useEffect } from 'react';
-import type { Visitor } from './types/visitor';
-import { fetchVisitors, createVisitor, updateVisitor, deleteVisitor } from './services/api';
+import { useState } from 'react';
+import { useVisitors } from './hooks/useVisitors';
+import { createVisitor, updateVisitor, deleteVisitor } from './services/api';
 import { VisitorList } from './components/VisitorList';
 import { VisitorForm } from './components/VisitorForm';
 import { Modal } from './components/Modal';
 import { SearchForm } from './components/SearchForm';
 import { PresenceFilter } from './components/PresenceFilter';
-import './index.css';
+import type { Visitor } from './types/visitor';
 import logo from './assets/logo.png';
+import './index.css';
 
 function App() {
-  const [visitors, setVisitors] = useState<Visitor[]>([]);
-  const [allVisitors, setAllVisitors] = useState<Visitor[]>([]);
+  const {
+    visitors,
+    allVisitors,
+    filters,
+    setFilters,
+    setAllVisitors,
+    setVisitors,
+    isLoading,
+    loadVisitors,
+  } = useVisitors();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVisitor, setSelectedVisitor] = useState<Visitor | null>(null);
-  const [filters, setFilters] = useState<{ fullName?: string; present?: boolean }>({
-    fullName: undefined,
-    present: undefined,
+
+  const getVisitorCounts = () => ({
+    presentCount: allVisitors.filter((v) => v.present).length,
+    absentCount: allVisitors.filter((v) => !v.present).length,
   });
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadData = async () => {
-      setIsLoading(true);
-      try {
-        const fullData = await fetchVisitors({ fullName: undefined, present: undefined });
-        setAllVisitors(fullData);
-        const params = new URLSearchParams(window.location.search);
-        const fullName = params.get('fullName') || undefined;
-        const present = params.get('present');
-        const newFilters = {
-          fullName,
-          present: present === 'true' ? true : present === 'false' ? false : undefined,
-        };
-        console.log('URL Filters on load:', newFilters);
-        setFilters(newFilters);
-        await loadVisitors(newFilters);
-      } catch (error) {
-        console.error('Error loading data:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadData();
-  }, [window.location.search]);
-
-  const loadVisitors = async (filters: { fullName?: string; present?: boolean }) => {
-    try {
-      console.log('Fetching visitors with filters:', filters);
-      const data = await fetchVisitors(filters);
-      console.log('Fetched visitors:', data);
-      setVisitors(data);
-    } catch (error) {
-      console.error('Error loading visitors:', error);
-    }
-  };
-
-  const getVisitorCounts = () => {
-    const presentCount = allVisitors.filter((v) => v.present).length;
-    const absentCount = allVisitors.filter((v) => !v.present).length;
-    return { presentCount, absentCount };
-  };
-
-  const handleOpenModal = (visitor: Visitor) => {
-    setSelectedVisitor(visitor);
-    setIsModalOpen(true);
-  };
 
   const handleSearch = (fullName: string) => {
-    const newFilters = { ...filters, fullName: fullName || undefined };
-    console.log('Search filters:', newFilters);
-    setFilters(newFilters);
-    updateUrl(newFilters);
-    loadVisitors(newFilters);
+    setFilters({ ...filters, fullName: fullName || undefined });
   };
 
   const handlePresenceFilter = (present: boolean | undefined) => {
-    const newFilters = { ...filters, present };
-    console.log('Presence filter:', newFilters);
-    setFilters(newFilters);
-    updateUrl(newFilters);
-    loadVisitors(newFilters);
-  };
-
-  const updateUrl = (filters: { fullName?: string; present?: boolean }) => {
-    const params = new URLSearchParams();
-    if (filters.fullName) params.set('fullName', filters.fullName);
-    if (filters.present !== undefined) params.set('present', filters.present.toString());
-    const newUrl = `${window.location.pathname}?${params.toString()}`;
-    console.log('Updated URL:', newUrl);
-    window.history.pushState({}, document.title, newUrl);
+    setFilters({ ...filters, present });
   };
 
   const handleAdd = async (data: Omit<Visitor, 'id'>) => {
     try {
       const newVisitor = await createVisitor(data);
-      const updatedAllVisitors = [...allVisitors, newVisitor];
-      setAllVisitors(updatedAllVisitors);
-      setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present));
+      const updatedAll = [...allVisitors, newVisitor];
+      setAllVisitors(updatedAll);
+      loadVisitors(filters);
       setIsModalOpen(false);
-    } catch (error) {
-      console.error('Error adding visitor:', error);
+    } catch (e) {
+      console.error('Error adding visitor:', e);
     }
   };
 
   const handleEdit = async (data: Omit<Visitor, 'id'>) => {
     if (!selectedVisitor) return;
     try {
-      const updatedVisitor = await updateVisitor(selectedVisitor.id, data);
-      const updatedAllVisitors = allVisitors.map((v) =>
-        v.id === updatedVisitor.id ? updatedVisitor : v
+      const updated = await updateVisitor(selectedVisitor.id, data);
+      const updatedAll = allVisitors.map((v) =>
+        v.id === updated.id ? updated : v
       );
-      setAllVisitors(updatedAllVisitors);
-      setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present));
-      setIsModalOpen(false);
+      setAllVisitors(updatedAll);
+      loadVisitors(filters);
       setSelectedVisitor(null);
-    } catch (error) {
-      console.error('Error editing visitor:', error);
+      setIsModalOpen(false);
+    } catch (e) {
+      console.error('Error editing visitor:', e);
     }
   };
 
   const handleDelete = async () => {
     if (!selectedVisitor) return;
-    if (window.confirm('Вы уверены, что хотите удалить этого посетителя?')) {
+    if (window.confirm('Удалить посетителя?')) {
       try {
         await deleteVisitor(selectedVisitor.id);
-        const updatedAllVisitors = allVisitors.filter((v) => v.id !== selectedVisitor.id);
-        setAllVisitors(updatedAllVisitors);
-        setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present));
-        setIsModalOpen(false);
+        const updated = allVisitors.filter((v) => v.id !== selectedVisitor.id);
+        setAllVisitors(updated);
+        loadVisitors(filters);
         setSelectedVisitor(null);
-      } catch (error) {
-        console.error('Error deleting visitor:', error);
+        setIsModalOpen(false);
+      } catch (e) {
+        console.error('Error deleting visitor:', e);
       }
     }
   };
@@ -144,61 +90,47 @@ function App() {
         <img src={logo} alt="logo" className="logo" />
         <div className="search-add-container">
           <SearchForm onSearch={handleSearch} initialSearch={filters.fullName || ''} />
-
-        </div>          
+        </div>
         <button className="add-button" onClick={() => setIsModalOpen(true)}>
-            Добавить
-          </button>
+          Добавить
+        </button>
         <div className="visitor-count">
-         <label className="title">Посетители</label>
-         <div className="count"><span className="present">{presentCount}</span> / <span className="absent">{absentCount}</span></div>
-
-         </div>
+          <label className="title">Посетители</label>
+          <div className="count">
+            <span className="present">{presentCount}</span> / <span className="absent">{absentCount}</span>
+          </div>
+        </div>
       </header>
 
       <main className="main-container">
-        {isLoading ? (
-          <p>Загрузка...</p>
-        ) : (
-          <VisitorList visitors={visitors} onOpenModal={handleOpenModal} />
-        )}
+        {isLoading ? <p>Загрузка...</p> : <VisitorList
+  visitors={visitors}
+  onOpenModal={(visitor) => {
+    setSelectedVisitor(visitor);
+    setIsModalOpen(true);
+  }}
+/>}
       </main>
 
       <footer className="footer">
         <PresenceFilter onFilter={handlePresenceFilter} initialPresent={filters.present} />
       </footer>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedVisitor(null);
-        }}
-      >
-        {selectedVisitor ? (
-          <div className="modal-content-wrapper">
-            <VisitorForm
-              visitor={selectedVisitor}
-              onSubmit={handleEdit}
-              onDelete={handleDelete}
-              onClose={() => {
-                setIsModalOpen(false);
-                setSelectedVisitor(null);
-              }}
-            />
-          </div>
-        ) : (
-          <div className="modal-content-wrapper">
-            <VisitorForm
-              visitor={undefined}
-              onSubmit={handleAdd}
-              onClose={() => {
-                setIsModalOpen(false);
-                setSelectedVisitor(null);
-              }}
-            />
-          </div>
-        )}
+      <Modal isOpen={isModalOpen} onClose={() => {
+        setIsModalOpen(false);
+        setSelectedVisitor(null);
+      }}>
+        <div className="modal-content-wrapper">
+          <VisitorForm
+            visitor={selectedVisitor ?? undefined}
+            onSubmit={selectedVisitor ? handleEdit : handleAdd}
+            onDelete={selectedVisitor ? handleDelete : undefined}
+            onClose={() => {
+              setIsModalOpen(false);
+              setSelectedVisitor(null);
+            }}
+          />
+        </div>
       </Modal>
     </div>
   );
