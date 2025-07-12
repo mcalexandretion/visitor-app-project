@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { fetchVisitors } from '../services/api';
 import { parseFiltersFromUrl, updateUrl } from '../utils/url';
 import type { Visitor } from '../types/visitor';
@@ -11,39 +11,53 @@ export const useVisitors = () => {
   const [filters, setFilters] = useState<Filters>({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const loadVisitors = async (newFilters: Filters) => {
+  const loadVisitors = useCallback(async (newFilters: Filters) => {
     try {
       const data = await fetchVisitors(newFilters);
       setVisitors(data);
     } catch (error) {
-      console.error('Error loading visitors:', error);
+      console.error('Ошибка загрузки посетителей', error);
     }
-  };
+  }, []);
 
   useEffect(() => {
-    const init = async () => {
-      setIsLoading(true);
-      try {
-        const all = await fetchVisitors({});
-        setAllVisitors(all);
-        const urlFilters = parseFiltersFromUrl();
-        setFilters(urlFilters);
-        await loadVisitors(urlFilters);
-      } catch (e) {
-        console.error('Error initializing data:', e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+const init = async () => {
+  setIsLoading(true);
+  try {
+    const urlFilters = parseFiltersFromUrl();
+    setFilters(urlFilters);
+
+    const [all, filtered] = await Promise.all([
+      fetchVisitors({}),
+      fetchVisitors(urlFilters),
+    ]);
+
+    setAllVisitors(all);
+    setVisitors(filtered);
+  } catch (e) {
+    console.error('ошибка загрузки данных', e);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
     init();
-  }, [window.location.search]);
+  }, []); 
 
-  const updateFilters = (newFilters: Filters) => {
-    setFilters(newFilters);
+const updateFilters = useCallback((newFilters: Filters) => {
+  setFilters((prev) => {
+    if (
+      prev.fullName === newFilters.fullName &&
+      prev.present === newFilters.present
+    ) {
+      return prev; 
+    }
+
     updateUrl(newFilters);
     loadVisitors(newFilters);
-  };
+    return newFilters;
+  });
+}, [loadVisitors]);
 
   return {
     visitors,
