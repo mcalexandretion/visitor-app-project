@@ -11,7 +11,7 @@ import logo from './assets/logo.png';
 
 function App() {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
-  const [allVisitors, setAllVisitors] = useState<Visitor[]>([]); 
+  const [allVisitors, setAllVisitors] = useState<Visitor[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVisitor, setSelectedVisitor] = useState<Visitor | null>(null);
   const [filters, setFilters] = useState<{ fullName?: string; present?: boolean }>({
@@ -20,14 +20,12 @@ function App() {
   });
   const [isLoading, setIsLoading] = useState(true);
 
-  
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
       try {
         const fullData = await fetchVisitors({ fullName: undefined, present: undefined });
         setAllVisitors(fullData);
- 
         const params = new URLSearchParams(window.location.search);
         const fullName = params.get('fullName') || undefined;
         const present = params.get('present');
@@ -47,7 +45,6 @@ function App() {
     loadData();
   }, [window.location.search]);
 
- 
   const loadVisitors = async (filters: { fullName?: string; present?: boolean }) => {
     try {
       console.log('Fetching visitors with filters:', filters);
@@ -58,7 +55,6 @@ function App() {
       console.error('Error loading visitors:', error);
     }
   };
-
 
   const getVisitorCounts = () => {
     const presentCount = allVisitors.filter((v) => v.present).length;
@@ -100,8 +96,8 @@ function App() {
     try {
       const newVisitor = await createVisitor(data);
       const updatedAllVisitors = [...allVisitors, newVisitor];
-      setAllVisitors(updatedAllVisitors); 
-      setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present)); // Применяем фильтр
+      setAllVisitors(updatedAllVisitors);
+      setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present));
       setIsModalOpen(false);
     } catch (error) {
       console.error('Error adding visitor:', error);
@@ -116,7 +112,7 @@ function App() {
         v.id === updatedVisitor.id ? updatedVisitor : v
       );
       setAllVisitors(updatedAllVisitors);
-      setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present)); // Применяем фильтр
+      setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present));
       setIsModalOpen(false);
       setSelectedVisitor(null);
     } catch (error) {
@@ -130,8 +126,8 @@ function App() {
       try {
         await deleteVisitor(selectedVisitor.id);
         const updatedAllVisitors = allVisitors.filter((v) => v.id !== selectedVisitor.id);
-        setAllVisitors(updatedAllVisitors); 
-        setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present)); // Применяем фильтр
+        setAllVisitors(updatedAllVisitors);
+        setVisitors(updatedAllVisitors.filter((v) => !filters.present || v.present === filters.present));
         setIsModalOpen(false);
         setSelectedVisitor(null);
       } catch (error) {
@@ -176,28 +172,27 @@ function App() {
       >
         {selectedVisitor ? (
           <div className="modal-content-wrapper">
-            <h2>Редактировать посетителя</h2>
             <VisitorForm
               visitor={selectedVisitor}
               onSubmit={handleEdit}
+              onDelete={handleDelete}
               onClose={() => {
                 setIsModalOpen(false);
                 setSelectedVisitor(null);
               }}
             />
-            <button className="delete-button" onClick={handleDelete}>
-              Удалить
-            </button>
           </div>
         ) : (
-          <VisitorForm
-            visitor={undefined}
-            onSubmit={handleAdd}
-            onClose={() => {
-              setIsModalOpen(false);
-              setSelectedVisitor(null);
-            }}
-          />
+          <div className="modal-content-wrapper">
+            <VisitorForm
+              visitor={undefined}
+              onSubmit={handleAdd}
+              onClose={() => {
+                setIsModalOpen(false);
+                setSelectedVisitor(null);
+              }}
+            />
+          </div>
         )}
       </Modal>
     </div>
