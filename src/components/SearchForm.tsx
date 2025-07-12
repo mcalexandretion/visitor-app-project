@@ -1,6 +1,6 @@
-import type { FC, FormEvent } from 'react';
-import {useState, useEffect} from 'react';
-import './SearchForm.module.css';
+import type { FC } from 'react';
+import { useState, useEffect } from 'react';
+import styles from './SearchForm.module.css';
 
 interface SearchFormProps {
   onSearch: (fullName: string) => void;
@@ -14,20 +14,23 @@ export const SearchForm: FC<SearchFormProps> = ({ onSearch, initialSearch }) => 
     setFullName(initialSearch);
   }, [initialSearch]);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    onSearch(fullName);
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onSearch(fullName);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [fullName, onSearch]);
 
   return (
-    <form onSubmit={handleSubmit} className="search-form">
+    <form className={styles.searchForm} onSubmit={(e) => e.preventDefault()}>
       <input
         type="text"
         value={fullName}
         onChange={(e) => setFullName(e.target.value)}
-        placeholder="Введите имя"
+        placeholder="Поиск по имени"
+        className={styles.searchInput}
       />
-      <button type="submit">Поиск</button>
     </form>
   );
 };
