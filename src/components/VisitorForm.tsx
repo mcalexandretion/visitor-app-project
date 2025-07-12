@@ -51,7 +51,6 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
           <option value="Прохожий">Прохожий</option>
           <option value="Клиент">Клиент</option>
           <option value="Партнер">Партнер</option>
-          <option value="Гости">Гости</option>
         </select>
       </div>
       <div className="form-group">
@@ -65,7 +64,7 @@ export const VisitorForm: FC<VisitorFormProps> = ({ visitor, onSubmit, onClose }
         </label>
       </div>
       <div className="form-actions">
-        <button type="submit">Сохранить</button>
+        <button type="submit">Добавить</button>
         <button type="button" onClick={onClose}>Отмена</button>
       </div>
     </form>
