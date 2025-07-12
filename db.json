@@ -22,11 +22,32 @@
       "id": "1ef7729f-67b5-4dd3-ae8f-4e60cb629625"
     },
     {
-      "fullName": "Петров Пётр Петрович",
-      "company": "ООО Ромашка",
+      "fullName": "Смирнова Анна Сергеевна",
+      "company": "ООО Лилия",
       "group": "Клиент",
+      "present": true,
+      "id": "SSW5od_"
+    },
+    {
+      "fullName": "Кузнецов Алексей Михайлович",
+      "company": "ООО Василёк",
+      "group": "Партнер",
       "present": false,
-      "id": "47d08171-ea07-48c0-8c71-76479210196f"
+      "id": "0e0iKnt"
+    },
+    {
+      "fullName": "Новикова Марина Дмитриевна",
+      "company": "ООО Ромашка",
+      "group": "Прохожий",
+      "present": false,
+      "id": "0UZaqo7"
+    },
+    {
+      "fullName": "Соколов Владимир Иванович",
+      "company": "ООО Ромашка",
+      "group": "Партнер",
+      "present": false,
+      "id": "Ys6GbqU"
     }
   ]
 }
