@@ -46,7 +46,7 @@ function App() {
       loadVisitors(filters);
       setIsModalOpen(false);
     } catch (e) {
-      console.error('Error adding visitor:', e);
+      console.error('Ошибка создания посетителя', e);
     }
   };
 
@@ -62,7 +62,7 @@ function App() {
       setSelectedVisitor(null);
       setIsModalOpen(false);
     } catch (e) {
-      console.error('Error editing visitor:', e);
+      console.error('Ошибка изменения данных посетителя', e);
     }
   };
 
@@ -77,7 +77,7 @@ function App() {
         setSelectedVisitor(null);
         setIsModalOpen(false);
       } catch (e) {
-        console.error('Error deleting visitor:', e);
+        console.error('Ошибка удаления посетителя', e);
       }
     }
   };
