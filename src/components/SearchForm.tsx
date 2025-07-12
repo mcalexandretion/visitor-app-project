@@ -16,8 +16,7 @@ export const SearchForm: FC<SearchFormProps> = ({ onSearch, initialSearch }) => 
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onSearch(fullName);
-    }, 300);
+      onSearch(fullName);}, 300);
 
     return () => clearTimeout(timer);
   }, [fullName, onSearch]);
@@ -34,3 +33,4 @@ export const SearchForm: FC<SearchFormProps> = ({ onSearch, initialSearch }) => 
     </form>
   );
 };
+ 
